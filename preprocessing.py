@@ -2,6 +2,11 @@ from typing import TypedDict
 
 INVALID_INPUT = "Input query is not valid."
 
+class LoginDetails(TypedDict):
+    host: str
+    port: int
+    user: str
+    password: str
 
 class UserInput(TypedDict):
     schema: str
