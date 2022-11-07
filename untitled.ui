@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1106</width>
-    <height>889</height>
+    <width>1104</width>
+    <height>882</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -201,6 +201,88 @@ font: 12px</string>
     <string>Input a query:</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_qep">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>360</y>
+     <width>871</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: &quot;#eaebf2&quot;;
+font: 12px;
+background-color: &quot;#2b2f3b&quot;;</string>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>330</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: &quot;#6a6b79&quot;;
+font: 12px</string>
+   </property>
+   <property name="text">
+    <string>HOW // Query Plan:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>590</y>
+     <width>231</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: &quot;#6a6b79&quot;;
+font: 12px</string>
+   </property>
+   <property name="text">
+    <string>WHY // Alternative Plan Comparisons:</string>
+   </property>
+  </widget>
   <zorder>ExecuteQuery</zorder>
   <zorder>input_comboBox</zorder>
   <zorder>input_plainTextEdit</zorder>
@@ -208,6 +290,9 @@ font: 12px</string>
   <zorder>input_treeWidget</zorder>
   <zorder>label_3</zorder>
   <zorder>label_2</zorder>
+  <zorder>label_qep</zorder>
+  <zorder>label_5</zorder>
+  <zorder>label_6</zorder>
  </widget>
  <resources/>
  <connections/>

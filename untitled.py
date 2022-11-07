@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainUi(object):
     def setupUi(self, MainUi):
         MainUi.setObjectName("MainUi")
-        MainUi.resize(1106, 889)
+        MainUi.resize(1104, 882)
         MainUi.setStyleSheet("QWidget {\n"
 "\n"
 "background-color: \"#232429\"\n"
@@ -102,6 +102,42 @@ class Ui_MainUi(object):
         self.label_3.setStyleSheet("color: \"#6a6b79\";\n"
 "font: 12px")
         self.label_3.setObjectName("label_3")
+        self.label_qep = QtWidgets.QLabel(MainUi)
+        self.label_qep.setGeometry(QtCore.QRect(180, 360, 871, 201))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_qep.setFont(font)
+        self.label_qep.setStyleSheet("color: \"#eaebf2\";\n"
+"font: 12px;\n"
+"background-color: \"#2b2f3b\";")
+        self.label_qep.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignTop)
+        self.label_qep.setWordWrap(True)
+        self.label_qep.setObjectName("label_qep")
+        self.label_5 = QtWidgets.QLabel(MainUi)
+        self.label_5.setGeometry(QtCore.QRect(180, 330, 111, 16))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_5.setFont(font)
+        self.label_5.setStyleSheet("color: \"#6a6b79\";\n"
+"font: 12px")
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(MainUi)
+        self.label_6.setGeometry(QtCore.QRect(180, 590, 231, 16))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_6.setFont(font)
+        self.label_6.setStyleSheet("color: \"#6a6b79\";\n"
+"font: 12px")
+        self.label_6.setObjectName("label_6")
         self.ExecuteQuery.raise_()
         self.input_comboBox.raise_()
         self.input_plainTextEdit.raise_()
@@ -109,6 +145,9 @@ class Ui_MainUi(object):
         self.input_treeWidget.raise_()
         self.label_3.raise_()
         self.label_2.raise_()
+        self.label_qep.raise_()
+        self.label_5.raise_()
+        self.label_6.raise_()
 
         self.retranslateUi(MainUi)
         QtCore.QMetaObject.connectSlotsByName(MainUi)
@@ -120,6 +159,9 @@ class Ui_MainUi(object):
         self.label.setText(_translate("MainUi", "Choose database"))
         self.label_2.setText(_translate("MainUi", "Tables:"))
         self.label_3.setText(_translate("MainUi", "Input a query:"))
+        self.label_qep.setText(_translate("MainUi", "TextLabel"))
+        self.label_5.setText(_translate("MainUi", "HOW // Query Plan:"))
+        self.label_6.setText(_translate("MainUi", "WHY // Alternative Plan Comparisons:"))
 
 
 if __name__ == "__main__":

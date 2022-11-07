@@ -1,53 +1,6 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-import sys
 
 from PyQt6.QtWidgets import QTreeWidgetItem
-
-from preprocessing import LoginDetails, get_tables_for_db, get_columns_for_table
-
-
-class Interface:
-    """
-    The VIEW of the application.
-
-    :returns: Dict['schema': str, 'query': str]
-    """
-
-    @classmethod
-    def login(cls, login_details: LoginDetails) -> LoginDetails:
-        app = QtWidgets.QApplication(sys.argv)
-        Form = QtWidgets.QWidget()
-        login_ui = Login(login_details)
-        login_ui.setupUi(Form)
-        Form.show()
-        app.exec()
-        return login_ui.login_details
-
-    @classmethod
-    def show_error(cls, msg):
-        app = QtWidgets.QApplication(sys.argv)
-        Form = QtWidgets.QWidget()
-        error_ui = Error(msg)
-        error_ui.setupUi(Form)
-        Form.show()
-        app.exec()
-        return
-
-    @classmethod
-    def get_query(cls, login_details, db_list):
-        app = QtWidgets.QApplication(sys.argv)
-        Form = QtWidgets.QWidget()
-        main_ui = MainUI(login_details, db_list)
-        main_ui.setupUi(Form)
-        Form.show()
-        app.exec()
-        print('program should not reach here lmao')
-        return
-
-
-"""
-Login screen objects that are children of the above Interface() class:
-"""
 
 
 class Login(object):
@@ -200,7 +153,7 @@ class Error(object):
     def __init__(self, msg):
         self.msg = msg
 
-    ########### START: ui boilerplate for login ###########
+    ########### START: ui boilerplate for error ###########
 
     def setupUi(self, Error):
         Error.setObjectName("Error")
@@ -263,7 +216,7 @@ class Error(object):
         self.label.setText(_translate("Error", "TextLabel"))
         self.label_4.setText(_translate("Error", "Error:"))
 
-        ########### END: ui boilerplate for login ###########
+        ########### END: ui boilerplate for error ###########
 
         self.label.setText(self.msg)
         self.button.clicked.connect(QtCore.QCoreApplication.instance().quit)
@@ -275,10 +228,10 @@ class MainUI(object):
         self.db_list = db_list
         self.login_details = login_details
 
-    ########### START: ui boilerplate for login ###########
+    ########### START: ui boilerplate for main ###########
     def setupUi(self, MainUi):
         MainUi.setObjectName("MainUi")
-        MainUi.resize(1106, 889)
+        MainUi.resize(1104, 882)
         MainUi.setStyleSheet("QWidget {\n"
                              "\n"
                              "background-color: \"#232429\"\n"
@@ -368,6 +321,43 @@ class MainUI(object):
         self.label_3.setStyleSheet("color: \"#6a6b79\";\n"
                                    "font: 12px")
         self.label_3.setObjectName("label_3")
+        self.label_qep = QtWidgets.QLabel(MainUi)
+        self.label_qep.setGeometry(QtCore.QRect(180, 360, 871, 201))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_qep.setFont(font)
+        self.label_qep.setStyleSheet("color: \"#eaebf2\";\n"
+                                     "font: 12px;\n"
+                                     "background-color: \"#2b2f3b\";")
+        self.label_qep.setAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeading | QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop)
+        self.label_qep.setWordWrap(True)
+        self.label_qep.setObjectName("label_qep")
+        self.label_5 = QtWidgets.QLabel(MainUi)
+        self.label_5.setGeometry(QtCore.QRect(180, 330, 111, 16))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_5.setFont(font)
+        self.label_5.setStyleSheet("color: \"#6a6b79\";\n"
+                                   "font: 12px")
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(MainUi)
+        self.label_6.setGeometry(QtCore.QRect(180, 590, 231, 16))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_6.setFont(font)
+        self.label_6.setStyleSheet("color: \"#6a6b79\";\n"
+                                   "font: 12px")
+        self.label_6.setObjectName("label_6")
         self.ExecuteQuery.raise_()
         self.input_comboBox.raise_()
         self.input_plainTextEdit.raise_()
@@ -375,6 +365,9 @@ class MainUI(object):
         self.input_treeWidget.raise_()
         self.label_3.raise_()
         self.label_2.raise_()
+        self.label_qep.raise_()
+        self.label_5.raise_()
+        self.label_6.raise_()
 
         self.retranslateUi(MainUi)
         QtCore.QMetaObject.connectSlotsByName(MainUi)
@@ -386,8 +379,11 @@ class MainUI(object):
         self.label.setText(_translate("MainUi", "Choose database"))
         self.label_2.setText(_translate("MainUi", "Tables:"))
         self.label_3.setText(_translate("MainUi", "Input a query:"))
+        self.label_qep.setText(_translate("MainUi", "TextLabel"))
+        self.label_5.setText(_translate("MainUi", "HOW // Query Plan:"))
+        self.label_6.setText(_translate("MainUi", "WHY // Alternative Plan Comparisons:"))
 
-        ########### END: ui boilerplate for login ###########
+        ########### END: ui boilerplate for main ###########
 
         self.input_comboBox.addItems(self.db_list)
         if "TPC-H" in self.db_list:
@@ -396,9 +392,13 @@ class MainUI(object):
 
         self.input_comboBox.currentIndexChanged.connect(self.populate_pane)
         self.input_treeWidget.itemDoubleClicked.connect(self.add_to_text)
-        self.input_plainTextEdit.setPlainText('SELECT ')
+        self.input_plainTextEdit.setPlainText(
+            'SELECT * FROM region LEFT JOIN nation on region.r_regionkey = nation.n_regionkey ORDER BY r_name DESC ')
 
-    def populate_pane(self):
+        self.ExecuteQuery.clicked.connect(self.return_query)
+
+    def populate_pane(self) -> QTreeWidgetItem:
+        from preprocessing import get_tables_for_db, get_columns_for_table
         self.input_treeWidget.clear()
         tables = get_tables_for_db(self.login_details, self.input_comboBox.currentText())
         treeWid = {}
@@ -413,3 +413,8 @@ class MainUI(object):
 
     def add_to_text(self, item: QTreeWidgetItem, col: int):
         self.input_plainTextEdit.appendPlainText(f'{item.text(col)}, ')
+
+    def return_query(self):
+        from project import Main
+        lol = Main.get_user_query(self, self.input_comboBox.currentText(), self.input_plainTextEdit.toPlainText())
+        self.label_qep.setText(lol)
