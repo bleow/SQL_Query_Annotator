@@ -112,6 +112,7 @@ def preprocessing(login_details: LoginDetails, queryInfo: QueryInfo):
             return None
 
 
+# code
 def permutation(temp_input):
     # perm = permutation
 
