@@ -3,7 +3,7 @@ import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QMessageBox
 
-from annotation import annotate
+from annotation import Annotator
 from preprocessing import get_dbs, LoginDetails, QueryInfo
 
 from interface import Login, Error, MainUI
