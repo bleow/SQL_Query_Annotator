@@ -46,6 +46,7 @@ class DatabaseConnector(object):
 Functions to help process database-related queries 
 """
 
+
 def get_dbs(login_details: LoginDetails) -> List[str]:
     """
     Get list of databases.
@@ -94,7 +95,7 @@ def get_columns_for_table(login_details: LoginDetails, db: str, schema: str) -> 
         Main.show_error(str(e))
 
 
-def preprocessing(login_details: LoginDetails, queryInfo: QueryInfo):
+def run_query(login_details: LoginDetails, queryInfo: QueryInfo):
     """
     The pre-ALGORITHM of the application. Reads and parses input for the annotation class.
 

@@ -1,7 +1,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-
 from PyQt6.QtWidgets import QTreeWidgetItem
+import pyqtgraph as pg
 
+COLOUR_PALETTE = ["#CCE4FF", "#B3B7FF", "#99CAFF", "#80BDFF", "#66AFFF", "#4DA2FF", "#3395FF", "#1987FF", "#006EE6", "#0055B3", "#003D80"]
 
 class Login(object):
     def __init__(self, login_details):
@@ -273,7 +274,8 @@ class MainUI(object):
         font.setWeight(50)
         self.input_plainTextEdit.setFont(font)
         self.input_plainTextEdit.setStyleSheet("color: \"#eaebf2\";\n"
-                                               "font: 12px")
+                                               "font: 12px;\n"
+                                               "padding: 5px")
         self.input_plainTextEdit.setObjectName("input_plainTextEdit")
         self.label = QtWidgets.QLabel(MainUi)
         self.label.setGeometry(QtCore.QRect(20, 30, 111, 16))
@@ -322,7 +324,7 @@ class MainUI(object):
                                    "font: 12px")
         self.label_3.setObjectName("label_3")
         self.label_qep = QtWidgets.QLabel(MainUi)
-        self.label_qep.setGeometry(QtCore.QRect(180, 360, 871, 201))
+        self.label_qep.setGeometry(QtCore.QRect(180, 350, 871, 211))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -331,7 +333,8 @@ class MainUI(object):
         self.label_qep.setFont(font)
         self.label_qep.setStyleSheet("color: \"#eaebf2\";\n"
                                      "font: 12px;\n"
-                                     "background-color: \"#2b2f3b\";")
+                                     "background-color: \"#2b2f3b\";\n"
+                                     "padding: 5px")
         self.label_qep.setAlignment(
             QtCore.Qt.AlignmentFlag.AlignLeading | QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop)
         self.label_qep.setWordWrap(True)
@@ -358,6 +361,19 @@ class MainUI(object):
         self.label_6.setStyleSheet("color: \"#6a6b79\";\n"
                                    "font: 12px")
         self.label_6.setObjectName("label_6")
+        self.label_graph = pg.PlotWidget(MainUi)
+        self.label_graph.setGeometry(QtCore.QRect(180, 610, 871, 251))
+        self.label_graph.setStyleSheet("color: \"#eaebf2\";\n"
+                                       "font: 12px;\n"
+                                       "background-color: \"#2b2f3b\";\n"
+                                       "padding: 0px;\n"
+                                       "border-width: 0px;")
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_graph.setObjectName("label_graph")
         self.ExecuteQuery.raise_()
         self.input_comboBox.raise_()
         self.input_plainTextEdit.raise_()
@@ -379,7 +395,8 @@ class MainUI(object):
         self.label.setText(_translate("MainUi", "Choose database"))
         self.label_2.setText(_translate("MainUi", "Tables:"))
         self.label_3.setText(_translate("MainUi", "Input a query:"))
-        self.label_qep.setText(_translate("MainUi", "TextLabel"))
+        self.label_qep.setText(_translate("MainUi",
+                                          "The Query Execution Plan in natural language will be printed here after you click \"Run Query\""))
         self.label_5.setText(_translate("MainUi", "HOW // Query Plan:"))
         self.label_6.setText(_translate("MainUi", "WHY // Alternative Plan Comparisons:"))
 
@@ -395,7 +412,7 @@ class MainUI(object):
         self.input_plainTextEdit.setPlainText(
             'SELECT * FROM region LEFT JOIN nation on region.r_regionkey = nation.n_regionkey ORDER BY r_name DESC ')
 
-        self.ExecuteQuery.clicked.connect(self.return_query)
+        self.ExecuteQuery.clicked.connect(self.process_query)
 
     def populate_pane(self) -> QTreeWidgetItem:
         from preprocessing import get_tables_for_db, get_columns_for_table
@@ -414,7 +431,48 @@ class MainUI(object):
     def add_to_text(self, item: QTreeWidgetItem, col: int):
         self.input_plainTextEdit.appendPlainText(f'{item.text(col)}, ')
 
-    def return_query(self):
+    def process_query(self):
         from project import Main
-        lol = Main.get_user_query(self, self.input_comboBox.currentText(), self.input_plainTextEdit.toPlainText())
-        self.label_qep.setText(lol)
+        annotation, qep_cost = Main.get_annotated_qep(self, self.input_comboBox.currentText(),
+                                                      self.input_plainTextEdit.toPlainText())
+        self.label_qep.setText(annotation)
+        if qep_cost != -1:
+            self.get_aqp()
+
+    def get_aqp(self):
+        from project import Main
+        alt_plans = Main.get_aqp(self)
+
+        configs = []
+        costs = []
+        for k, v in alt_plans.items():
+            config = []
+            print(k, list(k))
+            for i in list(k):
+                config.append(i)
+            configs.append(''.join(config))
+            costs.append(v)
+
+        BINS = len(COLOUR_PALETTE)
+        COST_DIFFERENTIAL = max(costs) - min(costs)
+        colour = []
+        for cost in costs:
+            diff = cost - min(costs)
+            bin = int((diff / COST_DIFFERENTIAL)*(BINS-1))
+            colour.append(COLOUR_PALETTE[bin])
+
+        # COLOUR_DIFFERENTIAL = abs(int(COLOUR_LOW[1:], base=16) - int(COLOUR_HIGH[1:], base=16))
+        # colour = []
+        # for cost in costs:
+        #     colour_decimal = int(COLOUR_LOW[1:], base=16) - (cost - min(costs)) / COST_DIFFERENTIAL * COLOUR_DIFFERENTIAL
+        #     # convert colour_decimal from float to int, then to hex, then drop the '0x', then left pad with zeroes
+        #     # if needed, then convert to string and put a # in front
+        #     colour.append("#"+str(hex(int(colour_decimal))[2:].zfill(6)))
+
+        print(colour)
+        bar_graphs = pg.BarGraphItem(x0=[_ for _ in range(len(alt_plans))], y0=0, width=1, height=costs, brushes=colour)
+        self.label_graph.addItem(bar_graphs)
+
+        ticks = [list(zip([i + 0.5 for i in range(len(alt_plans))], configs))]
+        xax = self.label_graph.getAxis('bottom')
+        xax.setTicks(ticks)

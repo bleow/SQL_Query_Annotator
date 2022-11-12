@@ -93,7 +93,8 @@ font: 12px</string>
    </property>
    <property name="styleSheet">
     <string notr="true">color: &quot;#eaebf2&quot;;
-font: 12px</string>
+font: 12px;
+padding: 5px</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -205,9 +206,9 @@ font: 12px</string>
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>360</y>
+     <y>350</y>
      <width>871</width>
-     <height>201</height>
+     <height>211</height>
     </rect>
    </property>
    <property name="font">
@@ -221,16 +222,20 @@ font: 12px</string>
    <property name="styleSheet">
     <string notr="true">color: &quot;#eaebf2&quot;;
 font: 12px;
-background-color: &quot;#2b2f3b&quot;;</string>
+background-color: &quot;#2b2f3b&quot;;
+padding: 5px</string>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>The Query Execution Plan in natural language will be printed here after you click &quot;Run Query&quot;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
    </property>
    <property name="wordWrap">
     <bool>true</bool>
+   </property>
+   <property name="margin">
+    <number>2</number>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -283,6 +288,31 @@ font: 12px</string>
     <string>WHY // Alternative Plan Comparisons:</string>
    </property>
   </widget>
+  <widget class="PlotWidget" name="label_graph">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>610</y>
+     <width>871</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: &quot;#eaebf2&quot;;
+font: 12px;
+background-color: &quot;#2b2f3b&quot;;
+padding: 5px;
+border-width: 0px;</string>
+   </property>
+  </widget>
   <zorder>ExecuteQuery</zorder>
   <zorder>input_comboBox</zorder>
   <zorder>input_plainTextEdit</zorder>
@@ -293,7 +323,15 @@ font: 12px</string>
   <zorder>label_qep</zorder>
   <zorder>label_5</zorder>
   <zorder>label_6</zorder>
+  <zorder>label_graph</zorder>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>pyqtgraph</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
