@@ -351,7 +351,7 @@ class MainUI(object):
                                    "font: 12px")
         self.label_5.setObjectName("label_5")
         self.label_6 = QtWidgets.QLabel(MainUi)
-        self.label_6.setGeometry(QtCore.QRect(180, 590, 231, 16))
+        self.label_6.setGeometry(QtCore.QRect(180, 590, 871, 16))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -398,7 +398,7 @@ class MainUI(object):
         self.label_qep.setText(_translate("MainUi",
                                           "The Query Execution Plan in natural language will be printed here after you click \"Run Query\""))
         self.label_5.setText(_translate("MainUi", "HOW // Query Plan:"))
-        self.label_6.setText(_translate("MainUi", "WHY // Alternative Plan Comparisons:"))
+        self.label_6.setText(_translate("MainUi", "WHY // Alternative Plan Comparisons of TOTAL COST vs PLAN CONFIGURATION:"))
 
         ########### END: ui boilerplate for main ###########
 

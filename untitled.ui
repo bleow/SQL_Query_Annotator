@@ -268,7 +268,7 @@ font: 12px</string>
     <rect>
      <x>180</x>
      <y>590</y>
-     <width>231</width>
+     <width>871</width>
      <height>16</height>
     </rect>
    </property>
@@ -285,7 +285,7 @@ font: 12px</string>
 font: 12px</string>
    </property>
    <property name="text">
-    <string>WHY // Alternative Plan Comparisons:</string>
+    <string>WHY // Alternative Plan Comparisons of TOTAL COST vs PLAN CONFIGURATION:</string>
    </property>
   </widget>
   <widget class="PlotWidget" name="label_graph">
