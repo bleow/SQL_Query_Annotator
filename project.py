@@ -1,7 +1,6 @@
 import sys
 
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QMessageBox
 
 from annotation import annotate
 from preprocessing import get_dbs, LoginDetails, QueryInfo
@@ -46,7 +45,6 @@ class Main:
         Form2.show()
         app2.exec()
 
-
     def load_main_UI(self, db_list):
         """
         Tell interface to start the main program loop
@@ -71,21 +69,33 @@ class Main:
         self.load_main_UI(db_list)
 
     # 4. Get user input
-    def get_user_query(self, database, query):
+    def get_annotated_qep(self, database, query):
         """
         Callback function that interface.py will call when user clicks 'Run query'
         """
         queryInfo = QueryInfo
         queryInfo.database = database
         queryInfo.query = query
-        from preprocessing import preprocessing
-        qep = preprocessing(self.login_details, queryInfo)
-        from interface import MainUI
+        from preprocessing import run_query
+        qep = run_query(self.login_details, queryInfo)
         if qep is None:
-            return "Invalid query! :("
+            return "Invalid query! :(", -1
         else:
             qep_annotated = annotate(qep)
-            return str(qep_annotated)
+            print('QEP:', qep)
+            return str(qep_annotated), qep[0][0][0]['Plan']['Total Cost']
+
+    # 5. Get alternative query plans
+    def get_aqp(self):
+        res = {frozenset(['enable_hashjoin']): 10.0
+               ,frozenset(['enable_merge']): 11.0
+               ,frozenset(['enable_materialisation']): 18.0
+               ,frozenset(['enable_hashjoin, enable_merge']): 199.2
+               }
+        # res = {frozenset(("enable_hashjoin",)): 1.0,
+        #        frozenset(("enable_mergesort",)): 2.0,
+        #        frozenset(("enable_xxxx", "enable_yyy")): 22.2}
+        return res
 
 
 if __name__ == '__main__':
