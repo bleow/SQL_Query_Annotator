@@ -3,7 +3,7 @@ import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QMessageBox
 
-from annotation import annotate
+from annotation import *
 from preprocessing import get_dbs, LoginDetails, QueryInfo
 
 from interface import Login, Error, MainUI
@@ -84,7 +84,7 @@ class Main:
         if qep is None:
             return "Invalid query! :("
         else:
-            qep_annotated = annotate(qep)
+            qep_annotated = Annotator().wrapper(qep)
             return str(qep_annotated)
 
 
