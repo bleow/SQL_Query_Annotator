@@ -2,7 +2,9 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QTreeWidgetItem
 import pyqtgraph as pg
 
-COLOUR_PALETTE = ["#CCE4FF", "#B3B7FF", "#99CAFF", "#80BDFF", "#66AFFF", "#4DA2FF", "#3395FF", "#1987FF", "#006EE6", "#0055B3", "#003D80"]
+COLOUR_PALETTE = ["#CCE4FF", "#B3B7FF", "#99CAFF", "#80BDFF", "#66AFFF", "#4DA2FF", "#3395FF", "#1987FF", "#006EE6",
+                  "#0055B3", "#003D80"]
+
 
 class Login(object):
     def __init__(self, login_details):
@@ -75,7 +77,7 @@ class Login(object):
                                       "font: 12px")
         self.input_port.setObjectName("input_port")
         self.label_2 = QtWidgets.QLabel(login)
-        self.label_2.setGeometry(QtCore.QRect(330, 20, 31, 20))
+        self.label_2.setGeometry(QtCore.QRect(300, 20, 31, 20))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -253,7 +255,7 @@ class MainUI(object):
                                         "font: 14px")
         self.ExecuteQuery.setObjectName("ExecuteQuery")
         self.input_comboBox = QtWidgets.QComboBox(MainUi)
-        self.input_comboBox.setGeometry(QtCore.QRect(20, 50, 151, 41))
+        self.input_comboBox.setGeometry(QtCore.QRect(10, 50, 151, 41))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -289,7 +291,7 @@ class MainUI(object):
                                  "font: 12px")
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(MainUi)
-        self.label_2.setGeometry(QtCore.QRect(20, 110, 111, 16))
+        self.label_2.setGeometry(QtCore.QRect(10, 480, 111, 16))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -300,7 +302,7 @@ class MainUI(object):
                                    "font: 12px")
         self.label_2.setObjectName("label_2")
         self.input_treeWidget = QtWidgets.QTreeWidget(MainUi)
-        self.input_treeWidget.setGeometry(QtCore.QRect(20, 130, 151, 731))
+        self.input_treeWidget.setGeometry(QtCore.QRect(10, 500, 151, 731))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -340,7 +342,7 @@ class MainUI(object):
         self.label_qep.setWordWrap(True)
         self.label_qep.setObjectName("label_qep")
         self.label_5 = QtWidgets.QLabel(MainUi)
-        self.label_5.setGeometry(QtCore.QRect(180, 330, 111, 16))
+        self.label_5.setGeometry(QtCore.QRect(180, 590, 871, 16))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -374,6 +376,77 @@ class MainUI(object):
         font.setItalic(False)
         font.setWeight(50)
         self.label_graph.setObjectName("label_graph")
+
+        # checkbox
+        self.cb_bitmap = QtWidgets.QCheckBox(MainUi)
+        self.cb_bitmap.setGeometry(QtCore.QRect(20, 140, 141, 20))
+        self.cb_bitmap.setObjectName("cb_bitmap")
+        self.label_4 = QtWidgets.QLabel(MainUi)
+        self.label_4.setGeometry(QtCore.QRect(20, 110, 111, 16))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_4.setFont(font)
+        self.label_4.setStyleSheet("color: \"#6a6b79\";\n""font: 12px")
+        self.label_4.setObjectName("label_4")
+        self.cb_index = QtWidgets.QCheckBox(MainUi)
+        self.cb_index.setGeometry(QtCore.QRect(20, 170, 141, 20))
+        self.cb_index.setObjectName("cb_index")
+        self.cb_indexonly = QtWidgets.QCheckBox(MainUi)
+        self.cb_indexonly.setGeometry(QtCore.QRect(20, 200, 141, 20))
+        self.cb_indexonly.setObjectName("cb_indexonly")
+        self.cb_seq = QtWidgets.QCheckBox(MainUi)
+        self.cb_seq.setGeometry(QtCore.QRect(20, 230, 141, 20))
+        self.cb_seq.setObjectName("cb_seq")
+        self.cb_tid = QtWidgets.QCheckBox(MainUi)
+        self.cb_tid.setGeometry(QtCore.QRect(20, 260, 141, 20))
+        self.cb_tid.setObjectName("cb_tid")
+        self.cb_nestedloop = QtWidgets.QCheckBox(MainUi)
+        self.cb_nestedloop.setGeometry(QtCore.QRect(20, 350, 151, 20))
+        self.cb_nestedloop.setObjectName("cb_nestedloop")
+        self.cb_hash = QtWidgets.QCheckBox(MainUi)
+        self.cb_hash.setGeometry(QtCore.QRect(20, 290, 141, 20))
+        self.cb_hash.setObjectName("cb_hash")
+        self.cb_merge = QtWidgets.QCheckBox(MainUi)
+        self.cb_merge.setGeometry(QtCore.QRect(20, 320, 151, 20))
+        self.cb_merge.setObjectName("cb_merge")
+        self.cb_hashagg = QtWidgets.QCheckBox(MainUi)
+        self.cb_hashagg.setGeometry(QtCore.QRect(20, 380, 151, 20))
+        self.cb_hashagg.setObjectName("cb_hashagg")
+        self.cb_material = QtWidgets.QCheckBox(MainUi)
+        self.cb_material.setGeometry(QtCore.QRect(20, 410, 141, 20))
+        self.cb_material.setObjectName("cb_material")
+        self.cb_explicit = QtWidgets.QCheckBox(MainUi)
+        self.cb_explicit.setGeometry(QtCore.QRect(20, 440, 141, 20))
+        self.cb_explicit.setObjectName("cb_explicit")
+
+        self.cb_bitmap.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_index.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_indexonly.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_seq.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_tid.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_hash.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_merge.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_nestedloop.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_hashagg.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_material.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+        self.cb_explicit.setStyleSheet("color: \"#6a6b79\";\n" "font: 12px")
+
+        self.cb_bitmap.raise_()
+        self.cb_index.raise_()
+        self.cb_indexonly.raise_()
+        self.cb_seq.raise_()
+        self.cb_tid.raise_()
+        self.cb_nestedloop.raise_()
+        self.cb_hash.raise_()
+        self.cb_merge.raise_()
+        self.cb_hashagg.raise_()
+        self.cb_material.raise_()
+        self.cb_explicit.raise_()
+        self.label_4.raise_()
+
         self.ExecuteQuery.raise_()
         self.input_comboBox.raise_()
         self.input_plainTextEdit.raise_()
@@ -386,7 +459,35 @@ class MainUI(object):
         self.label_6.raise_()
 
         self.retranslateUi(MainUi)
+
         QtCore.QMetaObject.connectSlotsByName(MainUi)
+
+    def doCheck(self):
+        checked = []
+        if self.cb_bitmap.isChecked():
+            checked.append("Bitmap Scan")
+        if self.cb_index.isChecked():
+            checked.append("Index Scan")
+        if self.cb_indexonly.isChecked():
+            checked.append("Index-only Scan")
+        if self.cb_seq.isChecked():
+            checked.append("Sequential Scan")
+        if self.cb_tid.isChecked():
+            checked.append("Tid Scan")
+        if self.cb_hash.isChecked():
+            checked.append("Hash Join")
+        if self.cb_merge.isChecked():
+            checked.append("Merge Join")
+        if self.cb_nestedloop.isChecked():
+            checked.append("Nested Loop Join")
+        if self.cb_hashagg.isChecked():
+            checked.append("Hashed Aggregation")
+        if self.cb_material.isChecked():
+            checked.append("Materialization")
+        if self.cb_explicit.isChecked():
+            checked.append("Explicit Sort")
+
+        return checked
 
     def retranslateUi(self, MainUi):
         _translate = QtCore.QCoreApplication.translate
@@ -398,7 +499,21 @@ class MainUI(object):
         self.label_qep.setText(_translate("MainUi",
                                           "The Query Execution Plan in natural language will be printed here after you click \"Run Query\""))
         self.label_5.setText(_translate("MainUi", "HOW // Query Plan:"))
-        self.label_6.setText(_translate("MainUi", "WHY // Alternative Plan Comparisons of TOTAL COST vs PLAN CONFIGURATION:"))
+        self.label_6.setText(
+            _translate("MainUi", "WHY // Alternative Plan Comparisons of TOTAL COST vs PLAN CONFIGURATION:"))
+
+        self.label_4.setText(_translate("MainUi", "Select Parameters"))
+        self.cb_bitmap.setText(_translate("MainUi", "Bitmap Scan"))
+        self.cb_index.setText(_translate("MainUi", "Index Scan"))
+        self.cb_indexonly.setText(_translate("MainUi", "Index-only Scan"))
+        self.cb_seq.setText(_translate("MainUi", "Sequential Scan"))
+        self.cb_tid.setText(_translate("MainUi", "Tid Scan"))
+        self.cb_nestedloop.setText(_translate("MainUi", "Nested Loop Join"))
+        self.cb_hash.setText(_translate("MainUi", "Hash Join"))
+        self.cb_merge.setText(_translate("MainUi", "Merge Join"))
+        self.cb_hashagg.setText(_translate("MainUi", "Hashed Aggregation"))
+        self.cb_material.setText(_translate("MainUi", "Materialization"))
+        self.cb_explicit.setText(_translate("MainUi", "Explicit Sort"))
 
         ########### END: ui boilerplate for main ###########
 
@@ -436,43 +551,31 @@ class MainUI(object):
         annotation, qep_cost = Main.get_annotated_qep(self, self.input_comboBox.currentText(),
                                                       self.input_plainTextEdit.toPlainText())
         self.label_qep.setText(annotation)
+
+        import preprocessing
+        perm_list = preprocessing.permutation(self)
+
         if qep_cost != -1:
-            self.get_aqp()
+            self.get_aqp(perm_list, qep_cost)
 
-    def get_aqp(self):
+    def get_aqp(self, perm_list, qep_cost):
         from project import Main
-        alt_plans = Main.get_aqp(self)
+        alt_plans = Main.get_aqp(self, perm_list, self.input_comboBox.currentText(),
+                                 self.input_plainTextEdit.toPlainText())
+        print(alt_plans)
+        print(perm_list)
+        costs = [qep_cost]
+        configs = ["OQP"]
+        for i in range(0, len(alt_plans)):
+            configs.append("AQP" + str(i + 1))
 
-        configs = []
-        costs = []
-        for k, v in alt_plans.items():
-            config = []
-            print(k, list(k))
-            for i in list(k):
-                config.append(i)
-            configs.append(''.join(config))
-            costs.append(v)
+        for i in alt_plans:
+            total_cost = i['Total Cost']
+            costs.append(total_cost)
 
-        BINS = len(COLOUR_PALETTE)
-        COST_DIFFERENTIAL = max(costs) - min(costs)
-        colour = []
-        for cost in costs:
-            diff = cost - min(costs)
-            bin = int((diff / COST_DIFFERENTIAL)*(BINS-1))
-            colour.append(COLOUR_PALETTE[bin])
-
-        # COLOUR_DIFFERENTIAL = abs(int(COLOUR_LOW[1:], base=16) - int(COLOUR_HIGH[1:], base=16))
-        # colour = []
-        # for cost in costs:
-        #     colour_decimal = int(COLOUR_LOW[1:], base=16) - (cost - min(costs)) / COST_DIFFERENTIAL * COLOUR_DIFFERENTIAL
-        #     # convert colour_decimal from float to int, then to hex, then drop the '0x', then left pad with zeroes
-        #     # if needed, then convert to string and put a # in front
-        #     colour.append("#"+str(hex(int(colour_decimal))[2:].zfill(6)))
-
-        print(colour)
-        bar_graphs = pg.BarGraphItem(x0=[_ for _ in range(len(alt_plans))], y0=0, width=1, height=costs, brushes=colour)
+        bar_graphs = pg.BarGraphItem(x0=[_ for _ in range(len(configs))], y0=0, width=1, height=costs, brush="b")
         self.label_graph.addItem(bar_graphs)
-
-        ticks = [list(zip([i + 0.5 for i in range(len(alt_plans))], configs))]
+        ticks = [list(zip([i + 0.5 for i in range(len(configs))], configs))]
         xax = self.label_graph.getAxis('bottom')
+        print(ticks)
         xax.setTicks(ticks)

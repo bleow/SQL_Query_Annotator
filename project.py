@@ -2,7 +2,7 @@ import sys
 
 from PyQt6 import QtWidgets
 
-from annotation import annotate
+from annotation import *
 from preprocessing import get_dbs, LoginDetails, QueryInfo
 
 from interface import Login, Error, MainUI
@@ -14,7 +14,7 @@ class Main:
         self.login_details.host = "localhost"
         self.login_details.port = "5432"
         self.login_details.user = "postgres"
-        self.login_details.password = "1111"
+        self.login_details.password = "postgres"
         self.login_details = self.login()
         print('host:', self.login_details.host)
         print('port:', self.login_details.port)
@@ -81,22 +81,26 @@ class Main:
         if qep is None:
             return "Invalid query! :(", -1
         else:
-            qep_annotated = annotate(qep)
+            # qep_annotated = annotate(qep)
+            qep_annotated = Annotator().wrapper(qep)
             print('QEP:', qep)
             return str(qep_annotated), qep[0][0][0]['Plan']['Total Cost']
 
     # 5. Get alternative query plans
-    def get_aqp(self):
-        res = {frozenset(['enable_hashjoin']): 10.0
-               ,frozenset(['enable_merge']): 11.0
-               ,frozenset(['enable_materialisation']): 18.0
-               ,frozenset(['enable_hashjoin, enable_merge']): 199.2
-               }
-        # res = {frozenset(("enable_hashjoin",)): 1.0,
-        #        frozenset(("enable_mergesort",)): 2.0,
-        #        frozenset(("enable_xxxx", "enable_yyy")): 22.2}
-        return res
+    def get_aqp(self, perm_list, database, query):
+        queryInfo = QueryInfo
+        queryInfo.database = database
+        queryInfo.query = query
+        from preprocessing import run_aqp_query
+        aqp = run_aqp_query(self.login_details,queryInfo,perm_list)
+        return aqp
 
+
+# res = {frozenset(['enable_hashjoin']): 10.0
+        #        ,frozenset(['enable_merge']): 11.0
+        #        ,frozenset(['enable_materialisation']): 18.0
+        #        ,frozenset(['enable_hashjoin, enable_merge']): 199.2
+        #        }
 
 if __name__ == '__main__':
     main = Main()

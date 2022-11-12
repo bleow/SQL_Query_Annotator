@@ -4,6 +4,7 @@ from typing import TypedDict, List
 from PyQt6.QtWidgets import QMessageBox
 import itertools
 import numpy as np
+import interface
 
 """
 This file also contains the business objects related to the application,
@@ -113,8 +114,36 @@ def run_query(login_details: LoginDetails, queryInfo: QueryInfo):
             return None
 
 
-def permutation(temp_input):
-    # perm = permutation
+def run_aqp_query(login_details: LoginDetails, queryInfo: QueryInfo, permutations):
+    query = "BEGIN;"
+    aqp_list = []
+    for i in permutations:
+        with DatabaseConnector(login_details, queryInfo.database) as cursor:
+            for key in i:
+                if i[key]:
+                    query += "SET " + key + " TO TRUE;"
+                else:
+                    query += "SET " + key + " TO FALSE;"
+
+            query += f'EXPLAIN (FORMAT JSON) {str(queryInfo.query)};'
+            print(query)
+            try:
+                cursor.execute(query)
+                res = cursor.fetchall()
+                aqp = res[0][0][0]["Plan"]
+            except:
+                aqp = None
+            cursor.execute("ROLLBACK;")
+
+        aqp_list.append(aqp)
+
+    return aqp_list
+
+
+def permutation(self):
+    temp_input = interface.MainUI.doCheck(self)
+    if len(temp_input) == 0:
+        return
 
     # initialize variable
     scan_count, join_count, hash_agg_count, material_count, explicit_count = 0, 0, 0, 0, 0
@@ -142,11 +171,7 @@ def permutation(temp_input):
     all_list = [scan_selected, join_selected]
 
     # append the other node type into list
-    if not hash_agg_selected and not material_selected and not explicit_selected:
-        all_list.append(['Hashed Aggregation'])
-        all_list.append(['Materialization'])
-        all_list.append(['Explicit Sort'])
-    else:
+    if hash_agg_selected or material_selected or explicit_selected:
         all_list.append(hash_agg_selected)
         all_list.append(material_selected)
         all_list.append(explicit_selected)
@@ -194,19 +219,6 @@ def permutation(temp_input):
 
     perm_query_list = []
 
-    first_default_query = {"enable_bitmapscan": True,
-                           "enable_indexscan": True,
-                           "enable_indexonlyscan": True,
-                           "enable_seqscan": True,
-                           "enable_tidscan": True,
-                           "enable_hashjoin": True,
-                           "enable_mergejoin": True,
-                           "enable_nestloop": True,
-                           "enable_hashagg": True,
-                           "enable_material": True,
-                           "enable_sort": True,
-                           }
-
     reference_query = {"enable_bitmapscan": False,
                        "enable_indexscan": False,
                        "enable_indexonlyscan": False,
@@ -219,8 +231,6 @@ def permutation(temp_input):
                        "enable_material": False,
                        "enable_sort": False,
                        }
-
-    perm_query_list.append(first_default_query)
 
     node_array = {
         "Bitmap Scan": "enable_bitmapscan",
@@ -246,8 +256,4 @@ def permutation(temp_input):
 
         perm_query_list.append(new_dict)
 
-    for i in perm_query_list:
-        print(i)
-        print("\n")
-
-    # return perm_query_list
+    return perm_query_list
