@@ -624,6 +624,9 @@ class MainUI(object):
                 for k, v in perm_list[i-1].items():
                     value.append(str(k) + ' : ' + str(v))
             treeWid_aqp[key] = value
+
+        self.label_graph_data.clear()
+
         for table in treeWid_aqp:
             tbl = QTreeWidgetItem([table])
             for column in treeWid_aqp[table]:
