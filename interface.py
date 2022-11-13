@@ -302,7 +302,7 @@ class MainUI(object):
                                    "font: 12px")
         self.label_2.setObjectName("label_2")
         self.input_treeWidget = QtWidgets.QTreeWidget(MainUi)
-        self.input_treeWidget.setGeometry(QtCore.QRect(10, 500, 151, 731))
+        self.input_treeWidget.setGeometry(QtCore.QRect(10, 500, 151, 361))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -342,7 +342,7 @@ class MainUI(object):
         self.label_qep.setWordWrap(True)
         self.label_qep.setObjectName("label_qep")
         self.label_5 = QtWidgets.QLabel(MainUi)
-        self.label_5.setGeometry(QtCore.QRect(180, 590, 871, 16))
+        self.label_5.setGeometry(QtCore.QRect(180, 330, 471, 16))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(False)
@@ -364,7 +364,7 @@ class MainUI(object):
                                    "font: 12px")
         self.label_6.setObjectName("label_6")
         self.label_graph = pg.PlotWidget(MainUi)
-        self.label_graph.setGeometry(QtCore.QRect(180, 610, 871, 251))
+        self.label_graph.setGeometry(QtCore.QRect(180, 610, 625, 251))
         self.label_graph.setStyleSheet("color: \"#eaebf2\";\n"
                                        "font: 12px;\n"
                                        "background-color: \"#2b2f3b\";\n"
@@ -376,6 +376,15 @@ class MainUI(object):
         font.setItalic(False)
         font.setWeight(50)
         self.label_graph.setObjectName("label_graph")
+
+
+        self.label_graph_data = QtWidgets.QTreeWidget(MainUi)
+        self.label_graph_data.setGeometry(QtCore.QRect(822, 610, 230, 251))
+        self.label_graph_data.setStyleSheet("color: \"#eaebf2\";\n"
+                                            "font: 12px")
+        self.label_graph_data.setColumnCount(1)
+        self.label_graph_data.setObjectName("label_graph_data")
+        self.label_graph_data.headerItem().setText(0, "1")
 
         # checkbox
         self.cb_bitmap = QtWidgets.QCheckBox(MainUi)
@@ -462,33 +471,6 @@ class MainUI(object):
 
         QtCore.QMetaObject.connectSlotsByName(MainUi)
 
-    def doCheck(self):
-        checked = []
-        if self.cb_bitmap.isChecked():
-            checked.append("Bitmap Scan")
-        if self.cb_index.isChecked():
-            checked.append("Index Scan")
-        if self.cb_indexonly.isChecked():
-            checked.append("Index-only Scan")
-        if self.cb_seq.isChecked():
-            checked.append("Sequential Scan")
-        if self.cb_tid.isChecked():
-            checked.append("Tid Scan")
-        if self.cb_hash.isChecked():
-            checked.append("Hash Join")
-        if self.cb_merge.isChecked():
-            checked.append("Merge Join")
-        if self.cb_nestedloop.isChecked():
-            checked.append("Nested Loop Join")
-        if self.cb_hashagg.isChecked():
-            checked.append("Hashed Aggregation")
-        if self.cb_material.isChecked():
-            checked.append("Materialization")
-        if self.cb_explicit.isChecked():
-            checked.append("Explicit Sort")
-
-        return checked
-
     def retranslateUi(self, MainUi):
         _translate = QtCore.QCoreApplication.translate
         MainUi.setWindowTitle(_translate("MainUi", "CZ4031 Group 58 Project 2"))
@@ -517,6 +499,18 @@ class MainUI(object):
 
         ########### END: ui boilerplate for main ###########
 
+        self.cb_bitmap.setChecked(True)
+        self.cb_index.setChecked(True)
+        self.cb_indexonly.setChecked(True)
+        self.cb_seq.setChecked(True)
+        self.cb_tid.setChecked(True)
+        self.cb_nestedloop.setChecked(True)
+        self.cb_hash.setChecked(True)
+        self.cb_merge.setChecked(True)
+        self.cb_hashagg.setChecked(True)
+        self.cb_material.setChecked(True)
+        self.cb_explicit.setChecked(True)
+
         self.input_comboBox.addItems(self.db_list)
         if "TPC-H" in self.db_list:
             self.input_comboBox.setCurrentText("TPC-H")
@@ -527,7 +521,34 @@ class MainUI(object):
         self.input_plainTextEdit.setPlainText(
             'SELECT * FROM region LEFT JOIN nation on region.r_regionkey = nation.n_regionkey ORDER BY r_name DESC ')
 
-        self.ExecuteQuery.clicked.connect(self.process_query)
+        self.ExecuteQuery.clicked.connect(self.show_annotations)
+
+    def doCheck(self):
+        checked = []
+        if self.cb_bitmap.isChecked():
+            checked.append("Bitmap Scan")
+        if self.cb_index.isChecked():
+            checked.append("Index Scan")
+        if self.cb_indexonly.isChecked():
+            checked.append("Index-only Scan")
+        if self.cb_seq.isChecked():
+            checked.append("Sequential Scan")
+        if self.cb_tid.isChecked():
+            checked.append("Tid Scan")
+        if self.cb_hash.isChecked():
+            checked.append("Hash Join")
+        if self.cb_merge.isChecked():
+            checked.append("Merge Join")
+        if self.cb_nestedloop.isChecked():
+            checked.append("Nested Loop Join")
+        if self.cb_hashagg.isChecked():
+            checked.append("Hashed Aggregation")
+        if self.cb_material.isChecked():
+            checked.append("Materialization")
+        if self.cb_explicit.isChecked():
+            checked.append("Explicit Sort")
+
+        return checked
 
     def populate_pane(self) -> QTreeWidgetItem:
         from preprocessing import get_tables_for_db, get_columns_for_table
@@ -536,6 +557,7 @@ class MainUI(object):
         treeWid = {}
         for table in tables:
             treeWid[table] = get_columns_for_table(self.login_details, self.input_comboBox.currentText(), table)
+        print(treeWid)
         for table in treeWid:
             tbl = QTreeWidgetItem([table])
             for column in treeWid[table]:
@@ -546,7 +568,7 @@ class MainUI(object):
     def add_to_text(self, item: QTreeWidgetItem, col: int):
         self.input_plainTextEdit.appendPlainText(f'{item.text(col)}, ')
 
-    def process_query(self):
+    def show_annotations(self):
         from project import Main
         annotation, qep_cost = Main.get_annotated_qep(self, self.input_comboBox.currentText(),
                                                       self.input_plainTextEdit.toPlainText())
@@ -556,26 +578,55 @@ class MainUI(object):
         perm_list = preprocessing.permutation(self)
 
         if qep_cost != -1:
-            self.get_aqp(perm_list, qep_cost)
+            self.plot_aqps(perm_list, qep_cost)
 
-    def get_aqp(self, perm_list, qep_cost):
+    def plot_aqps(self, perm_list, qep_cost):
+        self.label_graph.clear()
+
         from project import Main
         alt_plans = Main.get_aqp(self, perm_list, self.input_comboBox.currentText(),
                                  self.input_plainTextEdit.toPlainText())
-        print(alt_plans)
-        print(perm_list)
-        costs = [qep_cost]
-        configs = ["OQP"]
+        print('perm', perm_list)
+        print('alt', alt_plans)
+
+        configs = ["QEP"]
         for i in range(0, len(alt_plans)):
             configs.append("AQP" + str(i + 1))
+        print('configs', configs)
 
+        costs = [qep_cost]
         for i in alt_plans:
             total_cost = i['Total Cost']
             costs.append(total_cost)
+        print('costs', costs)
 
-        bar_graphs = pg.BarGraphItem(x0=[_ for _ in range(len(configs))], y0=0, width=1, height=costs, brush="b")
+        BINS = len(COLOUR_PALETTE)
+        COST_DIFFERENTIAL = max(costs) - min(costs)
+        colour = []
+        for cost in costs:
+            diff = cost - min(costs)
+            bin = int((diff / COST_DIFFERENTIAL) * (BINS - 1))
+            colour.append(COLOUR_PALETTE[bin])
+
+        bar_graphs = pg.BarGraphItem(x0=[_ for _ in range(len(configs))], y0=0, width=1, height=costs, brushes=colour)
         self.label_graph.addItem(bar_graphs)
         ticks = [list(zip([i + 0.5 for i in range(len(configs))], configs))]
         xax = self.label_graph.getAxis('bottom')
-        print(ticks)
         xax.setTicks(ticks)
+
+        treeWid_aqp = {}
+        for i in range(len(configs)):
+            key = str(configs[i]) + str(' : ') + str(costs[i])
+            value = []
+            if i == 0:
+                value.append("This is the QEP chosen by the DBMS.")
+            else:
+                for k, v in perm_list[i-1].items():
+                    value.append(str(k) + ' : ' + str(v))
+            treeWid_aqp[key] = value
+        for table in treeWid_aqp:
+            tbl = QTreeWidgetItem([table])
+            for column in treeWid_aqp[table]:
+                col = QTreeWidgetItem([column])
+                tbl.addChild(col)
+            self.label_graph_data.addTopLevelItem(tbl)
